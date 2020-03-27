@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <windows.h>
+#pragma warning(disable:4996)
+int main()
+{
+	int a[10];
+	int i, j, t;
+	printf("Input 10 numbers:\n");
+	for (i = 0; i < 10; i++)
+		scanf("%d", &a[i]);
+	printf("\n");
+	for (j = 0; j < 9; j++)//进行9次循环，实现9趟比较
+		for (i = 0; i < 9 - j; i++)//在每一趟中进行9-j次比较
+			if (a[i]>a[i + 1]){//相邻两个数比较
+				t = a[i];
+				a[i] = a[i + 1];
+				a[i + 1] = t;
+			}
+	printf("After:\n");
+	for (i = 0; i < 10; i++)
+		printf("%d" , a[i]);
+	printf("\n");
+	system("pause");
+	return 0;
+}
+
+////////////////////////////////////////////////////////////////////////
+//进行优化代码
+#include <stdio.h>
+#include <windows.h>
+#pragma warning(disable:4996)
+void bubble_sort(int arr[], int sz)//sz为数组arr的元素个数
+{
+	int i = 0;
+	//进行N-1趟比较
+	for (i = 0; i < sz - 1; i++){
+		//每一趟比较前n-1-i个，已排序好的最后一个元素不用再进行排序
+		int j = 0;
+		for (j = 0; j < sz - 1 - i; j++){
+			if (arr[j]>arr[j + 1]){
+				int temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+			}
+		}
+	}
+}
+int main()
+{
+	int arr[] = { 3, 1, 7, 5, 8, 9, 68, 2, 4, 6 };
+	int sz = sizeof(arr) / sizeof(arr[0]);
+	bubble_sort(arr, sz);
+	for (int i = 0; i < sz; i++){
+		printf("%d ", arr[i]);
+	}
+	system("pause");
+	return 0;
+}
